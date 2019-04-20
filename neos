@@ -1,0 +1,57 @@
+#!/bin/bash
+
+case "$1" in
+"getinfo") 
+	echo "getinfo"
+	shift 
+	for OPTION in "$@"
+		do
+			if [ $OPTION -eq 0 ] || [ $OPTION -eq 1 ]
+			then
+				neos-cli -datadir="/root/.neos" getinfo 
+			else
+				neos-cli -datadir="/root/.neos$OPTION" getinfo
+			fi
+		done
+	;;
+"start") 
+	echo "start daemon"
+	shift
+	for OPTION in "$@"
+		do
+			if [ $OPTION -eq 0 ] || [ $OPTION -eq 1 ]
+			then
+				neosd -datadir="/root/.neos" -daemon 
+			else
+				neosd -datadir="/root/.neos$OPTION" -daemon
+			fi
+		done
+	;;
+"stop")
+	echo "stop"
+	shift
+	for OPTION in "$@"
+		do
+			if [ $OPTION -eq 0 ] || [ $OPTION -eq 1 ]
+			then
+				neos-cli -datadir="/root/.neos" stop
+			else
+				neos-cli -datadir="/root/.neos$OPTION" stop
+			fi
+		done
+	;;
+"getstatus")
+	echo "getstatus"
+	shift
+	for OPTION in "$@"
+		do
+			if [ $OPTION -eq 0 ] || [ $OPTION -eq 1 ]
+			then
+				neos-cli -datadir="/root/.neos" getmasternodestatus
+			else
+				neos-cli -datadir="/root/.neos$OPTION" getmasternodestatus
+			fi
+		done
+	;;
+*) echo "wrong command";;
+esac
